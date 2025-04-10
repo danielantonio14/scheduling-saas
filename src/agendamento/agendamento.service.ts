@@ -14,4 +14,17 @@ export class AgendamentoService {
     const agendamento = this.repo.create(data);
     return this.repo.save(agendamento);
   }
+
+  findAll() {
+    return this.repo.find();
+  }
+  findOne(id: string) {
+    return this.repo.findOne({ where: { id } });
+  }
+  update(id: string, data: Partial<Agendamento>) {
+    return this.repo.update(id, data);
+  }
+  delete(id: string) {
+    return this.repo.delete(id);
+  }
 }
