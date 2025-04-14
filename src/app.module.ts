@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Agendamento } from './agendamento/agendamento.entity';
+import { AgendamentosModule } from './agendamento/agendamentos.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { Agendamento } from './agendamento/agendamento.entity';
       logging: true,
     }),
     TypeOrmModule.forFeature([Agendamento]),
+    AgendamentosModule,
   ],
 })
 export class AppModule {}
