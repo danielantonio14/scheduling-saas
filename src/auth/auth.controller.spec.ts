@@ -1,18 +1,22 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { AuthController } from './auth.controller';
+// src/auth/auth.controller.ts
+import { Controller, Post, Body } from '@nestjs/common';
+import { AuthService } from './auth.service';
+import { CreateUserDto } from './dto/create-user.dto';
+import { RegisterResponseDto } from './dto/register-response.dto';
 
-describe('AuthController', () => {
-  let controller: AuthController;
+@Controller('auth')
+export class AuthController {
+  constructor(private authService: AuthService) {}
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      controllers: [AuthController],
-    }).compile();
+  @Post('register')
+  async register(
+    @Body() createUserDto: CreateUserDto,
+  ): Promise<RegisterResponseDto> {
+    return this.authService.register(createUserDto);
+  }
 
-    controller = module.get<AuthController>(AuthController);
-  });
-
-  it('should be defined', () => {
-    expect(controller).toBeDefined();
-  });
-});
+  @Post('login')
+  async login(@Body() body: { email: string; password: string }) {
+    return this.authService.login(body.email, body.password);
+  }
+}
